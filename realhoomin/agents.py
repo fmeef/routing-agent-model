@@ -4,4 +4,4 @@ from realhoomin.generichoomin import GenericHoomin
 class Hoomin(GenericHoomin):
 
     def step(self):
-        super().step()
+        self.hoomin_dance()
