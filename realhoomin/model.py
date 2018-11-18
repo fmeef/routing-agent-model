@@ -40,15 +40,15 @@ class HoominWorld(Model):
 
 
         newcoord = self.roadcurrentcoord + self.roaddir
-        if newcoord[0] > self.width or newcoord[0] < 0:
+        if newcoord[0] >= self.width or newcoord[0] < 0:
             return None
-        if newcoord[1] > self.height or newcoord[0] < 0:
+        if newcoord[1] >= self.height or newcoord[0] < 0:
             return None
 
         self.roadcurrentcoord += self.roaddir
 
         road = Road(self.next_id(), tuple(self.roadcurrentcoord), self)
-        print("placing road, direction ", direction, " coord: ", self.roaddir)
+        print("placing road, direction ", direction, " coord: ", self.roadcurrentcoord)
         self.grid.place_agent(road, tuple(self.roadcurrentcoord))
 
         return road
@@ -90,9 +90,11 @@ class HoominWorld(Model):
         self.leftweight = 0.15
         self.rightweight = 0.15
         self.initial_roads = 70
-        self.initial_road_seeds = 5
+        self.initial_road_seeds = 20
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
+        self.roadset = None
+
         #hoomin tuning values
         self.initial_hoomins = initial_hoomins
         self.schedule = RandomHoominActivation(self)
