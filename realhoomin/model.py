@@ -37,6 +37,8 @@ class HoominWorld(Model):
             self.roaddir = np.array((self.roaddir[1], -1 * self.roaddir[0]))
         else:
             self.roaddir = np.array((0,0))
+            print("bad bad bad")
+        print("placing road, direction ", direction, " coord: ", self.roadcurrentcoord)
 
 
         newcoord = self.roadcurrentcoord + self.roaddir
@@ -48,7 +50,6 @@ class HoominWorld(Model):
         self.roadcurrentcoord += self.roaddir
 
         road = Road(self.next_id(), tuple(self.roadcurrentcoord), self)
-        print("placing road, direction ", direction, " coord: ", self.roadcurrentcoord)
         self.grid.place_agent(road, tuple(self.roadcurrentcoord))
 
         return road
@@ -56,28 +57,38 @@ class HoominWorld(Model):
 
     def singleroad(self, initialcoord=(0,0)):
         #initialize roads
+        print("placing road seed: ", initialcoord)
         roaddir = self.random.randrange(4)
         roadseedx = self.random.randrange(self.width)
         roadseedy = self.random.randrange(self.height)
         road = Road(self.next_id(), (roadseedx, roadseedy), self)
+        self.roadcurrentcoord = (roadseedx, roadseedy)
         self.grid.place_agent(road, (roadseedx, roadseedy))
 
         #note: roads are not scheduled because they do nothing
-
+        road = None
+        counter = 0
         for i in range(self.initial_roads):
-            val = self.random.random()
-            print("val: " , val)
-            if val <= self.straightweight:
-                self.roadplace(HoominWorld.STRAIGHT)
-            elif val > self.straightweight and val <= self.leftweight + self.straightweight:
-                self.roadplace(HoominWorld.LEFT)
-            elif val > self.leftweight + self.straightweight:
-                self.roadplace(HoominWorld.RIGHT)
+            while road is None:
+                val = self.random.random()
+                #print("val: " , val)
+                if val <= self.straightweight:
+                    road = self.roadplace(HoominWorld.STRAIGHT)
+                elif val > self.straightweight and val <= self.leftweight + self.straightweight:
+                    road = self.roadplace(HoominWorld.LEFT)
+                elif val > self.leftweight + self.straightweight:
+                    road = self.roadplace(HoominWorld.RIGHT)
+                if road is None:
+                    print("err: road is none")
+            road = None
+            counter += 1
+        print("initialized ", counter, " road tiles")
 
 
     def __init__(self, height=50, width=50, initial_hoomins=10):
         super().__init__()
 
+        print("initializing ", width, height)
         #map height and width
         self.height = height
         self.width = width
@@ -89,8 +100,8 @@ class HoominWorld(Model):
         self.straightweight = 0.7
         self.leftweight = 0.15
         self.rightweight = 0.15
-        self.initial_roads = 70
-        self.initial_road_seeds = 20
+        self.initial_roads = 10
+        self.initial_road_seeds = 1
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
         self.roadset = None
