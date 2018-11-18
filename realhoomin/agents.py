@@ -42,6 +42,7 @@ class Hoomin(GenericHoomin):
 
         self.mode = Hoomin.ROADHOOMIN
         self.dst = None
+        self.seekingroad = False
 
 
 
@@ -67,12 +68,15 @@ class Hoomin(GenericHoomin):
             pstart = start + 1
             for x in range(4):
                 for y in range(searchwidth):
-                    cells = self.model.get_cell_list_contents([pstart])
-                    for item in cells:
-                        if type(item) is Road:
-                            return item
+                    if pstart[0] >= 0 and pstart[0] < self.model.width:
+                        if pstart[1] >= 0 and pstart[1] < self.model.height:
+                            cells = self.model.grid.get_cell_list_contents([pstart])
+                            for item in cells:
+                                if type(item) is Road:
+                                    return item
                     pstart += mod
                 mod = np.array((mod[1], -1*mod[0]))
+            searchwidth += 1
 
         return None
 
@@ -85,10 +89,25 @@ class Hoomin(GenericHoomin):
                            ,np.sign(self.dst[1] - self.pos[1])))
         if tovect is not np.array((0,0)):
             self.model.grid.move_agent(self, tuple(self.pos + tovect))
+            return False
+        else:
+            return True
 
     #moves to the nearest road and randomly moves around it
     def random_road(self):
-        True
+        if self.seekingroad is False:
+            road = self.find_nearest_road()
+            print("hoomin ", self.unique_id, " found road ", road.pos)
+            if road is None:
+                return False
+            else:
+                self.seekingroad = True
+                self.dst = np.array(road.pos)
+        else:
+            if self.straightwalk_to_dest() is True:
+                print("hoomin ", self.unique_id, " straightwalking to road ", self.dst)
+                self.seekingroad = False
+                return True
 
     def step(self):
         if self.mode is Hoomin.ROADHOOMIN:
@@ -111,6 +130,15 @@ class MeetHoomin(Hoomin):
 
     def step(self):
         self.straightwalk_to_dest()
+
+class FindRoadHoomin(Hoomin):
+
+    def __init__(self, unique_id, pos, model):
+        super().__init__(unique_id, pos, model)
+
+    def step(self):
+        self.random_road()
+
 
 class Road(Agent):
     '''
