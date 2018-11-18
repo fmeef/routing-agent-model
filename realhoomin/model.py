@@ -13,7 +13,7 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
 from realhoomin.schedule import RandomHoominActivation
-from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin
+from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home
 import numpy as np
 
 
@@ -84,6 +84,7 @@ class HoominWorld(Model):
         #note: roads are not scheduled because they do nothing
         road = None
         counter = 0
+        roadlist = []
         for i in range(self.initial_roads):
             while road is None:
                 val = self.random.random()
@@ -96,9 +97,13 @@ class HoominWorld(Model):
                     road = self.roadplace_random(HoominWorld.RIGHT)
                 if road is None:
                     print("err: road is none")
+
+                roadlist.append(road);
             road = None
             counter += 1
         print("initialized ", counter, " road tiles")
+        self.roadset = self.roadset.union(set(roadlist))
+        del roadlist
 
 
     def __init__(self, height=50, width=50, initial_hoomins=10):
@@ -121,7 +126,12 @@ class HoominWorld(Model):
         self.gridspacing = 7
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
-        self.roadset = None
+        self.roadset = set()
+
+
+        #home tuning options
+        self.homes_per_hoomins = 1
+        self.initial_homes = self.homes_per_hoomins * initial_hoomins
 
         #hoomin tuning values
         self.initial_hoomins = initial_hoomins
@@ -144,6 +154,19 @@ class HoominWorld(Model):
             y = self.random.randrange(self.height)
 
             self.singleroad((x,y))
+
+        #initialize homes
+        for i in range(self.initial_homes):
+            road = self.random.sample(self.roadset, 1)
+            #TODO get neighbors and put home
+            neighbors = self.grid.get_neighborhood(road[0].pos, False, True)
+            for neighbor in neighbors:
+                if len(self.grid.get_cell_list_contents(neighbor)) is 0:
+                    home = Home(self.next_id(), neighbor, self)
+                    self.grid.place_agent(home, neighbor)
+
+
+
 
         self.roadplace_grid()
         self.running = True

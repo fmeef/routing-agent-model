@@ -2,7 +2,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
 from mesa.visualization.UserParam import UserSettableParameter
 
-from realhoomin.agents import Hoomin, Road, MeetHoomin, FindRoadHoomin
+from realhoomin.agents import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home
 from realhoomin.model import HoominWorld
 
 
@@ -32,6 +32,10 @@ def hoomin_portrayal(agent):
         portrayal["scale"] = 0.9
         portrayal["Layer"] = 1
 
+    elif type(agent) is Home:
+        portrayal["Shape"] = "realhoomin/resources/home.png"
+        portrayal["scale"] = 1.5
+        portrayal["Layer"] = 0
 
     return portrayal
 

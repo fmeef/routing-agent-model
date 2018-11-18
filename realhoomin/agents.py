@@ -25,6 +25,15 @@ class GenericHoomin(Agent):
             self.model.grid.move_agent(self, self.startingpos)
 
 
+
+class Home(Agent):
+
+    def __init__(self, unique_id, pos, model):
+        super().__init__(unique_id, model)
+
+    def step(self):
+        return True
+
 class Hoomin(GenericHoomin):
     ROADHOOMIN = 1
     FLIRTHOOMIN = 2
