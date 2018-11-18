@@ -41,8 +41,22 @@ class Hoomin(GenericHoomin):
                       Hoomin.WORKHOOMIN)
 
         self.mode = Hoomin.ROADHOOMIN
+        self.dst = None
 
 
+
+    #checks the new destination for bounds and sets it as this hooman's destination
+    def setdst(self, newdst):
+        if newdst[0] < 0 or newdst[0] > self.model.width:
+            return False
+        if newdst[1] < 0 or newdst[1] > self.model.height:
+            return False
+
+        self.dst = np.array(newdst)
+        return True
+
+
+    #searches for the nearest road tile and returns it
     def find_nearest_road(self):
         start = np.array(self.pos)
         road = None
@@ -62,6 +76,17 @@ class Hoomin(GenericHoomin):
 
         return None
 
+    #walks in a straight path to the hoomin's destination, ignoring roads.
+    def straightwalk_to_dest(self):
+        if self.dst is None:
+            return
+
+        tovect = np.array((np.sign(self.dst[0] - self.pos[0])
+                           ,np.sign(self.dst[1] - self.pos[1])))
+        if tovect is not np.array((0,0)):
+            self.model.grid.move_agent(self, next_move)
+
+    #moves to the nearest road and randomly moves around it
     def random_road(self):
         True
 
