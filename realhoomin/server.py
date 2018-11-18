@@ -25,7 +25,7 @@ def hoomin_portrayal(agent):
     return portrayal
 
 canvas_element = CanvasGrid(hoomin_portrayal, 50, 50, 500, 500)
-chart_element = ChartModule([{"Label" : "Hoomin Level", "Color" : "#FFFFFF"}])
+chart_element = ChartModule([{"Label" : "Hoomin Level", "Color" : "#CACACA"}])
 
 model_params = {}
 server = ModularServer(HoominWorld, [canvas_element, chart_element], "Hoomin World", model_params)
