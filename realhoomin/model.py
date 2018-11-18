@@ -42,7 +42,7 @@ class HoominWorld(Model):
         newcoord = self.roadcurrentcoord + self.roaddir
         if newcoord[0] >= self.width or newcoord[0] < 0:
             return None
-        if newcoord[1] >= self.height or newcoord[0] < 0:
+        if newcoord[1] >= self.height or newcoord[1] < 0:
             return None
 
         self.roadcurrentcoord += self.roaddir
