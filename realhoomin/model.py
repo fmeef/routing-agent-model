@@ -13,7 +13,7 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
 from realhoomin.schedule import RandomHoominActivation
-from realhoomin.agents  import Hoomin, Road
+from realhoomin.agents  import Hoomin, Road, MeetHoomin
 import numpy as np
 
 
@@ -134,7 +134,7 @@ class HoominWorld(Model):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
 
-            hoomin = Hoomin(self.next_id(), (x,y), self)
+            hoomin = MeetHoomin(self.next_id(), (x,y), self, (5,5))
             self.grid.place_agent(hoomin, (x,y))
             self.schedule.add(hoomin)
 
