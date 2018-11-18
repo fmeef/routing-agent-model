@@ -26,14 +26,6 @@ class GenericHoomin(Agent):
 
 
 
-class Home(Agent):
-
-    def __init__(self, unique_id, pos, model):
-        super().__init__(unique_id, model)
-
-    def step(self):
-        return True
-
 class Hoomin(GenericHoomin):
     ROADHOOMIN = 1
     FLIRTHOOMIN = 2
@@ -52,6 +44,7 @@ class Hoomin(GenericHoomin):
         self.mode = Hoomin.ROADHOOMIN
         self.dst = None
         self.seekingroad = False
+        self.home = None
 
 
 
@@ -128,6 +121,22 @@ class Hoomin(GenericHoomin):
 
     def get_mode(self):
         return self.mode
+
+class Home(Agent):
+
+    claimedhomes = set()
+
+    def __init__(self, unique_id, pos, model):
+        super().__init__(unique_id, model)
+        self.occupants = set()
+    def step(self):
+        return True
+
+    def claim(self, hoomin:Hoomin):
+        Home.claimedhomes = Home.claimedhomes.union(set([self]))
+        self.occupants = self.occupants.union(set([hoomin]))
+        hoomin.home = self
+
 
 
 class MeetHoomin(Hoomin):

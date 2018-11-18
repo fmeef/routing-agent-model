@@ -132,6 +132,7 @@ class HoominWorld(Model):
         #home tuning options
         self.homes_per_hoomins = 1
         self.initial_homes = self.homes_per_hoomins * initial_hoomins
+        self.homeset = set()
 
         #hoomin tuning values
         self.initial_hoomins = initial_hoomins
@@ -139,21 +140,15 @@ class HoominWorld(Model):
         self.grid = MultiGrid(self.height, self.width, torus=True)
         self.datacollector = DataCollector({"Hoomin Level" : lambda m: m.get_hoomin_level()})
 
-        #initialize hoomins
-        for i in range(self.initial_hoomins):
-            x = self.random.randrange(self.width)
-            y = self.random.randrange(self.height)
-
-            hoomin = FindRoadHoomin(self.next_id(), (x,y), self)
-            self.grid.place_agent(hoomin, (x,y))
-            self.schedule.add(hoomin)
-
         #initialize roads
         for i in range(self.initial_road_seeds):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
 
             self.singleroad((x,y))
+
+
+        homelist = []
 
         #initialize homes
         for i in range(self.initial_homes):
@@ -167,10 +162,22 @@ class HoominWorld(Model):
                 if len(n) > 0:
                     homeblock = self.random.sample(n, 1)
                     home = Home(self.next_id(), homeblock[0], self)
+                    homelist.append(home)
                     self.grid.place_agent(home, homeblock[0])
 
+        self.homeset = self.homeset.union(set(homelist))
 
-
+        #initialize hoomins
+        for i in range(self.initial_hoomins):
+            x = self.random.randrange(self.width)
+            y = self.random.randrange(self.height)
+            hoomin = FindRoadHoomin(self.next_id(), (x,y), self)
+            possiblehomes = self.homeset.difference(Home.claimedhomes)
+            myhome = self.random.sample(possiblehomes, 1)
+            if len(myhome) > 0:
+                myhome[0].claim(hoomin)
+            self.grid.place_agent(hoomin, (x,y))
+            self.schedule.add(hoomin)
 
         self.roadplace_grid()
         self.running = True
