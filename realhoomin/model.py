@@ -161,9 +161,13 @@ class HoominWorld(Model):
             #TODO get neighbors and put home
             neighbors = self.grid.get_neighborhood(road[0].pos, False, True)
             for neighbor in neighbors:
+                n = []
                 if len(self.grid.get_cell_list_contents(neighbor)) is 0:
-                    home = Home(self.next_id(), neighbor, self)
-                    self.grid.place_agent(home, neighbor)
+                    n.append(neighbor)
+                if len(n) > 0:
+                    homeblock = self.random.sample(n, 1)
+                    home = Home(self.next_id(), homeblock[0], self)
+                    self.grid.place_agent(home, homeblock[0])
 
 
 
