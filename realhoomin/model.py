@@ -154,7 +154,8 @@ class HoominWorld(Model):
         for i in range(self.initial_homes):
             road = self.random.sample(self.roadset, 1)
             #TODO get neighbors and put home
-            neighbors = self.grid.get_neighborhood(road[0].pos, False, True)
+            if len(road) > 0 and road[0] is not None:
+                neighbors = self.grid.get_neighborhood(road[0].pos, False, True)
             for neighbor in neighbors:
                 n = []
                 if len(self.grid.get_cell_list_contents(neighbor)) is 0:

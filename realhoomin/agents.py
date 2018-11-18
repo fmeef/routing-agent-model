@@ -85,17 +85,19 @@ class Hoomin(GenericHoomin):
     #walks in a straight path to the hoomin's destination, ignoring roads.
     def straightwalk_to_dest(self):
         if self.dst is None:
-            return
+            return False
 
         tovect = np.array((np.sign(self.dst[0] - self.pos[0])
                            ,np.sign(self.dst[1] - self.pos[1])))
-        if tovect is not np.array((0,0)):
+        if (tovect[0] != 0) and (tovect[1] != 0):
             self.model.grid.move_agent(self, tuple(self.pos + tovect))
+            print("MOVE")
             return False
-        else:
-            return True
 
-    #moves to the nearest road and randomly moves around it
+        print("SPLEEF")
+        return True
+
+    #moves to the nearest road and stops
     def random_road(self):
         if self.seekingroad is False:
             road = self.find_nearest_road()
@@ -107,9 +109,39 @@ class Hoomin(GenericHoomin):
                 self.dst = np.array(road.pos)
         else:
             if self.straightwalk_to_dest() is True:
-                print("hoomin ", self.unique_id, " straightwalking to road ", self.dst)
                 self.seekingroad = False
                 return True
+        return False
+
+    #move to a point following roads
+    def pathfind_to_point(self):
+        if self.seekingroad is True:
+            return False
+        if self.dst is None:
+            return False
+
+        tovect = np.array((np.sign(self.dst[0] - self.pos[0])
+                           ,np.sign(self.dst[1] - self.pos[1])))
+
+        next = self.model.grid.get_neighbors(self.pos, False, True)
+        mindist = 0.0
+        minroad = None
+        for x in next:
+            if type(x) is Road:
+                rdist = np.linalg.norm(self.dst - x.pos)
+                if rdist > mindist:
+                    mindist = rdist
+                    minroad = x
+        if minroad is not None:
+            print("moving to road ", minroad.pos)
+            self.model.grid.move_agent(self, minroad.pos)
+            return True
+        else:
+            return False
+
+
+
+
 
     def step(self):
         if self.mode is Hoomin.ROADHOOMIN:
@@ -153,9 +185,15 @@ class FindRoadHoomin(Hoomin):
 
     def __init__(self, unique_id, pos, model):
         super().__init__(unique_id, pos, model)
-
+        self.onroad = False
     def step(self):
-        self.random_road()
+        if self.onroad:
+            self.dst = np.array(self.home.pos)
+            self.pathfind_to_point()
+        else:
+            if self.random_road() is True:
+                print("starting onroad hoomin ", self.unique_id)
+                self.onroad = True
 
 
 class Road(Agent):
@@ -169,4 +207,3 @@ class Road(Agent):
 
     def step(self):
         True
-
