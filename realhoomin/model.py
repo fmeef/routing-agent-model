@@ -27,6 +27,22 @@ class HoominWorld(Model):
     verbose = False
     description = "A model of foot traffic and radio communication in an urban environment"
 
+    def roadplace_grid(self):
+        for h in range(self.height):
+            if h % self.gridspacing is 0:
+                for w in range(self.width):
+                    road = Road(self.next_id(), (w,h), self)
+                    self.grid.place_agent(road, (w,h))
+
+        for w in range(self.width):
+            if w % self.gridspacing is 0:
+                for h in range(self.height):
+                    road = Road(self.next_id(), (w,h), self)
+                    self.grid.place_agent(road, (w,h))
+
+
+
+
     def roadplace_random(self, direction=0):
 
         if direction is HoominWorld.STRAIGHT:
@@ -102,6 +118,7 @@ class HoominWorld(Model):
         self.rightweight = 0.05
         self.initial_roads = 80
         self.initial_road_seeds = 4
+        self.gridspacing = 7
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
         self.roadset = None
@@ -128,6 +145,7 @@ class HoominWorld(Model):
 
             self.singleroad((x,y))
 
+        self.roadplace_grid()
         self.running = True
         self.datacollector.collect(self)
 
