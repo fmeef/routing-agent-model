@@ -27,7 +27,7 @@ class HoominWorld(Model):
     verbose = False
     description = "A model of foot traffic and radio communication in an urban environment"
 
-    def roadplace(self, direction=0):
+    def roadplace_random(self, direction=0):
 
         if direction is HoominWorld.STRAIGHT:
             True
@@ -73,11 +73,11 @@ class HoominWorld(Model):
                 val = self.random.random()
                 #print("val: " , val)
                 if val <= self.straightweight:
-                    road = self.roadplace(HoominWorld.STRAIGHT)
+                    road = self.roadplace_random(HoominWorld.STRAIGHT)
                 elif val > self.straightweight and val <= self.leftweight + self.straightweight:
-                    road = self.roadplace(HoominWorld.LEFT)
+                    road = self.roadplace_random(HoominWorld.LEFT)
                 elif val > self.leftweight + self.straightweight:
-                    road = self.roadplace(HoominWorld.RIGHT)
+                    road = self.roadplace_random(HoominWorld.RIGHT)
                 if road is None:
                     print("err: road is none")
             road = None
@@ -97,11 +97,11 @@ class HoominWorld(Model):
         self.hoomin_level = 0
 
         #road generation tuning
-        self.straightweight = 0.7
-        self.leftweight = 0.15
-        self.rightweight = 0.15
-        self.initial_roads = 10
-        self.initial_road_seeds = 1
+        self.straightweight = 0.9
+        self.leftweight = 0.05
+        self.rightweight = 0.05
+        self.initial_roads = 80
+        self.initial_road_seeds = 4
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
         self.roadset = None
