@@ -91,10 +91,8 @@ class Hoomin(GenericHoomin):
                            ,np.sign(self.dst[1] - self.pos[1])))
         if (tovect[0] != 0) and (tovect[1] != 0):
             self.model.grid.move_agent(self, tuple(self.pos + tovect))
-            print("MOVE")
             return False
 
-        print("SPLEEF")
         return True
 
     #moves to the nearest road and stops
@@ -120,16 +118,18 @@ class Hoomin(GenericHoomin):
         if self.dst is None:
             return False
 
+
+        print('hooming ',self.unique_id, " pathfinding to ", self.dst )
         tovect = np.array((np.sign(self.dst[0] - self.pos[0])
                            ,np.sign(self.dst[1] - self.pos[1])))
 
         next = self.model.grid.get_neighbors(self.pos, False, True)
-        mindist = 0.0
+        mindist = np.sqrt(pow(self.model.height,2.0) + pow(self.model.width,2.0))
         minroad = None
         for x in next:
             if type(x) is Road:
                 rdist = np.linalg.norm(self.dst - x.pos)
-                if rdist > mindist:
+                if rdist < mindist:
                     mindist = rdist
                     minroad = x
         if minroad is not None:
