@@ -38,46 +38,23 @@ class HoominWorld(Model):
         else:
             self.roaddir = np.array((0,0))
 
+
+        newcoord = self.roadcurrentcoord + self.roaddir
+        if newcoord[0] > self.width or newcoord[0] < 0:
+            return None
+        if newcoord[1] > self.height or newcoord[0] < 0:
+            return None
+
         self.roadcurrentcoord += self.roaddir
+
         road = Road(self.next_id(), tuple(self.roadcurrentcoord), self)
         print("placing road, direction ", direction, " coord: ", self.roaddir)
         self.grid.place_agent(road, tuple(self.roadcurrentcoord))
 
+        return road
 
 
-    def __init__(self, height=50, width=50, initial_hoomins=10):
-        super().__init__()
-
-        #map height and width
-        self.height = height
-        self.width = width
-
-        #ignore this. it does nothing
-        self.hoomin_level = 0
-
-        #road generation tuning
-        self.straightweight = 0.7
-        self.leftweight = 0.15
-        self.rightweight = 0.15
-        self.initial_roads = 70
-        self.roadcurrentcoord = np.array((0,0))
-        self.roaddir = np.array((1,0))
-        #hoomin tuning values
-        self.initial_hoomins = initial_hoomins
-        self.schedule = RandomHoominActivation(self)
-        self.grid = MultiGrid(self.height, self.width, torus=True)
-        self.datacollector = DataCollector({"Hoomin Level" : lambda m: m.get_hoomin_level()})
-
-        #initialize hoomins
-        for i in range(self.initial_hoomins):
-            x = self.random.randrange(self.width)
-            y = self.random.randrange(self.height)
-
-            hoomin = Hoomin(self.next_id(), (x,y), self)
-            self.grid.place_agent(hoomin, (x,y))
-            self.schedule.add(hoomin)
-
-
+    def singleroad(self, initialcoord=(0,0)):
         #initialize roads
         roaddir = self.random.randrange(4)
         roadseedx = self.random.randrange(self.width)
@@ -96,6 +73,47 @@ class HoominWorld(Model):
                 self.roadplace(HoominWorld.LEFT)
             elif val > self.leftweight + self.straightweight:
                 self.roadplace(HoominWorld.RIGHT)
+
+
+    def __init__(self, height=50, width=50, initial_hoomins=10):
+        super().__init__()
+
+        #map height and width
+        self.height = height
+        self.width = width
+
+        #ignore this. it does nothing
+        self.hoomin_level = 0
+
+        #road generation tuning
+        self.straightweight = 0.7
+        self.leftweight = 0.15
+        self.rightweight = 0.15
+        self.initial_roads = 70
+        self.initial_road_seeds = 5
+        self.roadcurrentcoord = np.array((0,0))
+        self.roaddir = np.array((1,0))
+        #hoomin tuning values
+        self.initial_hoomins = initial_hoomins
+        self.schedule = RandomHoominActivation(self)
+        self.grid = MultiGrid(self.height, self.width, torus=True)
+        self.datacollector = DataCollector({"Hoomin Level" : lambda m: m.get_hoomin_level()})
+
+        #initialize hoomins
+        for i in range(self.initial_hoomins):
+            x = self.random.randrange(self.width)
+            y = self.random.randrange(self.height)
+
+            hoomin = Hoomin(self.next_id(), (x,y), self)
+            self.grid.place_agent(hoomin, (x,y))
+            self.schedule.add(hoomin)
+
+        #initialize roads
+        for i in range(self.initial_road_seeds):
+            x = self.random.randrange(self.width)
+            y = self.random.randrange(self.height)
+
+            self.singleroad((x,y))
 
         self.running = True
         self.datacollector.collect(self)
