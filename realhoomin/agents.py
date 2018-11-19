@@ -78,6 +78,8 @@ class Hoomin(GenericHoomin):
         return True
 
 
+
+
     #searches for the nearest road tile and returns it
     def find_nearest_road(self):
         start = np.array(self.pos)
@@ -100,6 +102,15 @@ class Hoomin(GenericHoomin):
             searchwidth += 1
 
         return None
+
+    def get_neighbor_hoomins(self, radius):
+        neighbors = self.model.grid.get_neighbors(self.pos, False, True, radius=radius)
+        result = []
+        for x in neighbors:
+            if type(x) is Hoomin:
+                result.append(x)
+
+        return result
 
     #walks in a straight path to the hoomin's destination, ignoring roads.
     def straightwalk_to_dest(self):
@@ -184,11 +195,16 @@ class Hoomin(GenericHoomin):
 
 
 
+    def sync_scatterbuffer(self):
+        True
+        #TODO:
 
 
     def step(self):
         if self.mode is Hoomin.ROADHOOMIN:
             self.random_road()
+
+
 
     def set_mode(self, mode):
         if mode in self.modes:
