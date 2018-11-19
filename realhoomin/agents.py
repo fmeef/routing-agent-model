@@ -157,11 +157,12 @@ class Hoomin(GenericHoomin):
         if self.previous_road is not None:
             roadchoices.difference(set([self.previous_road]))
 
+        self.previous_road = self.pos
+
         if len(roadchoices) > 0:
             road = self.random.sample(roadchoices, 1)
             self.model.grid.move_agent(self, road[0].pos)
 
-        self.previous_road = self.pos
 
 
 
