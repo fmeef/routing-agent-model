@@ -134,11 +134,16 @@ class HoominWorld(Model):
         self.initial_homes = self.homes_per_hoomins * initial_hoomins
         self.homeset = set()
 
+
+        #scatterbrain metrics
+        self.total_scattermessages = 0
+
+
         #hoomin tuning values
         self.initial_hoomins = initial_hoomins
         self.schedule = RandomHoominActivation(self)
         self.grid = MultiGrid(self.height, self.width, torus=True)
-        self.datacollector = DataCollector({"Hoomin Level" : lambda m: m.get_hoomin_level()})
+        self.datacollector = DataCollector({"Messages Exchanged" : lambda m: m.total_scattermessages})
 
         #initialize roads
         for i in range(self.initial_road_seeds):
