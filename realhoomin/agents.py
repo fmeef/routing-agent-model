@@ -104,11 +104,13 @@ class Hoomin(GenericHoomin):
         return None
 
     def get_neighbor_hoomins(self, radius):
-        neighbors = self.model.grid.get_neighbors(self.pos, False, True, radius=radius)
+        neighbors = self.model.grid.iter_neighborhood(self.pos, False, include_center=False, radius=radius)
         result = []
         for x in neighbors:
-            if type(x) is Hoomin:
-                result.append(x)
+            cellcontents = self.model.grid.get_cell_list_contents(x)
+            for val in cellcontents:
+                if type(val) is Hoomin or issubclass(type(val), Hoomin):
+                    result.append(val)
 
         return result
 
