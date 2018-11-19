@@ -112,7 +112,7 @@ class Hoomin(GenericHoomin):
         return False
 
     #move to a point following roads
-    def pathfind_to_point(self):
+    def pathfind_to_point_direct(self):
         if self.seekingroad is True:
             return False
         if self.dst is None:
@@ -139,6 +139,28 @@ class Hoomin(GenericHoomin):
         else:
             return False
 
+
+    def random_pathfind(self):
+        if self.seekingroad is True:
+            return False
+
+        print('hoomin ', self.unique_id, " random moving")
+
+        next = self.model.grid.get_neighbors(self.pos, False, True)
+
+        roadchoices = []
+        for x in next:
+            if type(x) is Road:
+                roadchoices.append(x)
+
+        roadchoices = set(roadchoices)
+        roadchoices.difference(set([self.previous_road]))
+
+        if len(roadchoices) > 0:
+            road = self.random.sample(roadchoices, 1)
+            self.model.grid.move_agent(self, road[0].pos)
+            
+        self.previous_road = self.pos
 
 
 
