@@ -1,9 +1,24 @@
 from mesa import Agent
 import numpy as np
 
+
+class ScatterMessage():
+    """
+    represents a message that moves between hoomans using a DTN
+    """
+    _currentid = 0
+
+    @staticmethod
+    def nextID():
+        currentid += 1
+        return currentid
+
+    def __init__(self, message):
+        self.id = ScatterMessage.nextID()
+        self.num_hops = 0
+        self.message = message
+
 class GenericHoomin(Agent):
-
-
     grid = None
     x = None
     y = None
@@ -14,7 +29,11 @@ class GenericHoomin(Agent):
         super().__init__(unique_id, model)
         self.pos = pos
         self.startingpos = pos
+        self.scatter_buffer = set()
 
+    def add_scattermessage(self, message):
+        m = ScatterMessage(message)
+        self.scatter_buffer = self.scatter_buffer.union(set([m]))
 
     def hoomin_dance(self):
         if self.pos is self.startingpos:
