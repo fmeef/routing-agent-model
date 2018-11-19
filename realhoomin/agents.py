@@ -10,8 +10,8 @@ class ScatterMessage():
 
     @staticmethod
     def nextID():
-        currentid += 1
-        return currentid
+        ScatterMessage._currentid += 1
+        return ScatterMessage._currentid
 
     def __init__(self, message):
         self.id = ScatterMessage.nextID()
