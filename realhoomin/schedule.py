@@ -34,10 +34,11 @@ class RandomHoominActivation(RandomActivation):
         agent_keys = list(self.hoomintypes[hoomintype].keys())
         self.model.random.shuffle(agent_keys)
         for key in agent_keys:
-            self.hoomintypes[hoomintype][key].step()
-            neighborhoomins = self.hoomintypes[hoomintype][key].get_neighbor_hoomins(50)
-            
+            hoomin = self.hoomintypes[hoomintype][key]
+            hoomin.step()
+            neighborhoomins = hoomin.get_neighbor_hoomins(hoomin.scatterrange)
+            for n in neighborhoomins:
+                hoomin.send_blockdata(n)
 
     def get_hoomin_count(self, hoomintype):
         return len(self.hoomintypes[hoomintype].values())
-

@@ -29,11 +29,6 @@ class GenericHoomin(Agent):
         super().__init__(unique_id, model)
         self.pos = pos
         self.startingpos = pos
-        self.scatter_buffer = set()
-
-    def add_scattermessage(self, message):
-        m = ScatterMessage(message)
-        self.scatter_buffer = self.scatter_buffer.union(set([m]))
 
     def hoomin_dance(self):
         if self.pos is self.startingpos:
@@ -52,7 +47,7 @@ class Hoomin(GenericHoomin):
     RESTHOOMIN = 4
     WORKHOOMIN = 5
 
-    def __init__(self, unique_id, pos, model):
+    def __init__(self, unique_id, pos, model, scatterrange=7):
         super().__init__(unique_id, pos, model)
         self.modes = (Hoomin.ROADHOOMIN,
                       Hoomin.FLIRTHOOMIN,
@@ -65,7 +60,8 @@ class Hoomin(GenericHoomin):
         self.seekingroad = False
         self.home = None
         self.previous_road = None
-
+        self.scatterbuffer = []
+        self.scatterrange = scatterrange
 
     #checks the new destination for bounds and sets it as this hooman's destination
     def setdst(self, newdst):
@@ -113,6 +109,18 @@ class Hoomin(GenericHoomin):
                     result.append(val)
 
         return result
+
+
+    #### REALLY IMPORTANT. Should make a lambda function to customize
+    #### behaviour of scatterbrain blockdata. Right now we just edit here though
+    def send_blockdata(self, hoomin):
+        packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
+        for packet in packets:
+            hoomin.scatterbuffer.append(packet)
+
+
+    def store_scattermessage(self, message):
+        self.scatterbuffer.append(ScatterMessage(message))
 
     #walks in a straight path to the hoomin's destination, ignoring roads.
     def straightwalk_to_dest(self):
