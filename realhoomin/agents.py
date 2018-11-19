@@ -115,9 +115,12 @@ class Hoomin(GenericHoomin):
     #### behaviour of scatterbrain blockdata. Right now we just edit here though
     def send_blockdata(self, hoomin):
         packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
+        counter = 0
         for packet in packets:
-            hoomin.scatterbuffer.append(packet)
-        self.model.total_scattermessages += len(packets)
+            if packet not in hoomin.scatterbuffer:
+                hoomin.scatterbuffer.append(packet)
+                counter += 1
+        self.model.total_scattermessages += counter
 
 
     def store_scattermessage(self, message):

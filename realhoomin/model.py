@@ -181,7 +181,8 @@ class HoominWorld(Model):
             for x in range(10):
                hoomin.store_scattermessage("hoomin!")
             possiblehomes = self.homeset.difference(Home.claimedhomes)
-            myhome = self.random.sample(possiblehomes, 1)
+            if len(possiblehomes) > 0:
+                myhome = self.random.sample(possiblehomes, 1)
             if len(myhome) > 0:
                 myhome[0].claim(hoomin)
             self.grid.place_agent(hoomin, (x,y))
