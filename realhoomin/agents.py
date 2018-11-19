@@ -45,7 +45,7 @@ class Hoomin(GenericHoomin):
         self.dst = None
         self.seekingroad = False
         self.home = None
-
+        self.previous_road = None
 
 
     #checks the new destination for bounds and sets it as this hooman's destination
@@ -154,12 +154,13 @@ class Hoomin(GenericHoomin):
                 roadchoices.append(x)
 
         roadchoices = set(roadchoices)
-        roadchoices.difference(set([self.previous_road]))
+        if self.previous_road is not None:
+            roadchoices.difference(set([self.previous_road]))
 
         if len(roadchoices) > 0:
             road = self.random.sample(roadchoices, 1)
             self.model.grid.move_agent(self, road[0].pos)
-            
+
         self.previous_road = self.pos
 
 
@@ -211,7 +212,7 @@ class FindRoadHoomin(Hoomin):
     def step(self):
         if self.onroad:
             self.dst = np.array(self.home.pos)
-            self.pathfind_to_point()
+            self.random_pathfind()
         else:
             if self.random_road() is True:
                 print("starting onroad hoomin ", self.unique_id)
