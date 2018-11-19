@@ -117,6 +117,7 @@ class Hoomin(GenericHoomin):
         packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
         for packet in packets:
             hoomin.scatterbuffer.append(packet)
+        self.model.total_scattermessages += len(packets)
 
 
     def store_scattermessage(self, message):
