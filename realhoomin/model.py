@@ -178,8 +178,9 @@ class HoominWorld(Model):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
             hoomin = FindRoadHoomin(self.next_id(), (x,y), self)
-            for x in range(10):
-               hoomin.store_scattermessage("hoomin!")
+            if i == 1:
+                for x in range(10):
+                    hoomin.store_scattermessage("hoomin!")
             possiblehomes = self.homeset.difference(Home.claimedhomes)
             if len(possiblehomes) > 0:
                 myhome = self.random.sample(possiblehomes, 1)
