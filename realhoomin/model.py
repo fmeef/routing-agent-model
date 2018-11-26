@@ -126,7 +126,7 @@ class HoominWorld(Model):
         self.rightweight = settings.rightweight
         self.initial_roads = settings.initial_roads
         self.initial_road_seeds = settings.initial_road_seeds
-        self.gridspacing = 7
+        self.gridspacing = settings.gridspacing
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
         self.roadset = set()
