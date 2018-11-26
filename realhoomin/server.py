@@ -4,7 +4,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 
 from realhoomin.agents import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home
 from realhoomin.model import HoominWorld
-
+import settings
 
 def hoomin_portrayal(agent):
     if agent is None:
@@ -39,7 +39,7 @@ def hoomin_portrayal(agent):
 
     return portrayal
 
-canvas_element = CanvasGrid(hoomin_portrayal, 50, 50, 500, 500)
+canvas_element = CanvasGrid(hoomin_portrayal, settings.width, settings.height, 500, 500)
 chart_element = ChartModule([{"Label" : "Messages Exchanged", "Color" : "#CACACA"}])
 
 model_params = {}

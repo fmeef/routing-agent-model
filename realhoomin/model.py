@@ -15,6 +15,7 @@ from mesa.datacollection import DataCollector
 from realhoomin.schedule import RandomHoominActivation
 from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home
 import numpy as np
+import settings
 
 
 class HoominWorld(Model):
@@ -114,15 +115,17 @@ class HoominWorld(Model):
         self.height = height
         self.width = width
 
+
+
         #ignore this. it does nothing
         self.hoomin_level = 0
 
         #road generation tuning
-        self.straightweight = 0.9
-        self.leftweight = 0.05
-        self.rightweight = 0.05
-        self.initial_roads = 80
-        self.initial_road_seeds = 4
+        self.straightweight = settings.straightweight
+        self.leftweight = settings.leftweight
+        self.rightweight = settings.rightweight
+        self.initial_roads = settings.initial_roads
+        self.initial_road_seeds = settings.initial_road_seeds
         self.gridspacing = 7
         self.roadcurrentcoord = np.array((0,0))
         self.roaddir = np.array((1,0))
@@ -140,7 +143,7 @@ class HoominWorld(Model):
 
 
         #hoomin tuning values
-        self.initial_hoomins = initial_hoomins
+        self.initial_hoomins = settings.initial_hoomins
         self.schedule = RandomHoominActivation(self)
         self.grid = MultiGrid(self.height, self.width, torus=True)
         self.datacollector = DataCollector({"Messages Exchanged" : lambda m: m.total_scattermessages})
@@ -194,7 +197,6 @@ class HoominWorld(Model):
         self.roadplace_grid()
         self.running = True
         self.datacollector.collect(self)
-
 
     def get_hoomin_level(self):
         return self.hoomin_level

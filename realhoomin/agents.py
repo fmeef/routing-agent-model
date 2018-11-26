@@ -163,7 +163,7 @@ class Hoomin(GenericHoomin):
             return False
 
 
-        print('hooming ',self.unique_id, " pathfinding to ", self.dst )
+        #print('hooming ',self.unique_id, " pathfinding to ", self.dst )
         tovect = np.array((np.sign(self.dst[0] - self.pos[0])
                            ,np.sign(self.dst[1] - self.pos[1])))
 
@@ -188,7 +188,7 @@ class Hoomin(GenericHoomin):
         if self.seekingroad is True:
             return False
 
-        print('hoomin ', self.unique_id, " random moving")
+        #print('hoomin ', self.unique_id, " random moving")
 
         next = self.model.grid.get_neighbors(self.pos, False, True)
 
