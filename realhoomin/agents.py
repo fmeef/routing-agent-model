@@ -1,4 +1,5 @@
 from mesa import Agent
+import settings
 import numpy as np
 
 
@@ -47,7 +48,7 @@ class Hoomin(GenericHoomin):
     RESTHOOMIN = 4
     WORKHOOMIN = 5
 
-    def __init__(self, unique_id, pos, model, scatterrange=7):
+    def __init__(self, unique_id, pos, mode):
         super().__init__(unique_id, pos, model)
         self.modes = (Hoomin.ROADHOOMIN,
                       Hoomin.FLIRTHOOMIN,
@@ -61,7 +62,7 @@ class Hoomin(GenericHoomin):
         self.home = None
         self.previous_road = None
         self.scatterbuffer = []
-        self.scatterrange = scatterrange
+        self.scatterrange = settings.bluetooth_range
 
     #checks the new destination for bounds and sets it as this hooman's destination
     def setdst(self, newdst):

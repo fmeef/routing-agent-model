@@ -20,3 +20,7 @@ gridspacing = 7
 #home generation tuning options
 homes_per_hoomins = 1
 initial_homes = homes_per_hoomins * initial_hoomins
+
+
+#radio tuning options
+bluetooth_range = 5
