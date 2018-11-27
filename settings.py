@@ -25,6 +25,12 @@ initial_homes = homes_per_hoomins * initial_hoomins
 #radio tuning options
 bluetooth_range = 5
 
+'''
+Function called when exchanging scatterdata between two hoomins.
+
+Self is hoomin initiating the exchange, hoomin is hoomin that self is
+exchanging with 
+'''
 def send_blockdata(self, hoomin):
     packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
     counter = 0
