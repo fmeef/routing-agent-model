@@ -24,3 +24,15 @@ initial_homes = homes_per_hoomins * initial_hoomins
 
 #radio tuning options
 bluetooth_range = 5
+
+def send_blockdata(self, hoomin):
+    packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
+    counter = 0
+    for packet in packets:
+        if packet not in hoomin.scatterbuffer:
+            hoomin.scatterbuffer.append(packet)
+            counter += 1
+    self.model.total_scattermessages += counter
+
+
+scatterfucntion = send_blockdata

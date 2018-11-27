@@ -48,7 +48,7 @@ class Hoomin(GenericHoomin):
     RESTHOOMIN = 4
     WORKHOOMIN = 5
 
-    def __init__(self, unique_id, pos, mode):
+    def __init__(self, unique_id, pos, model):
         super().__init__(unique_id, pos, model)
         self.modes = (Hoomin.ROADHOOMIN,
                       Hoomin.FLIRTHOOMIN,
@@ -63,7 +63,7 @@ class Hoomin(GenericHoomin):
         self.previous_road = None
         self.scatterbuffer = []
         self.scatterrange = settings.bluetooth_range
-
+        Hoomin.send_blockdata = settings.send_blockdata
     #checks the new destination for bounds and sets it as this hooman's destination
     def setdst(self, newdst):
         if newdst[0] < 0 or newdst[0] > self.model.width:
@@ -111,18 +111,8 @@ class Hoomin(GenericHoomin):
 
         return result
 
-
-    #### REALLY IMPORTANT. Should make a lambda function to customize
-    #### behaviour of scatterbrain blockdata. Right now we just edit here though
     def send_blockdata(self, hoomin):
-        packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
-        counter = 0
-        for packet in packets:
-            if packet not in hoomin.scatterbuffer:
-                hoomin.scatterbuffer.append(packet)
-                counter += 1
-        self.model.total_scattermessages += counter
-
+        True
 
     def store_scattermessage(self, message):
         self.scatterbuffer.append(ScatterMessage(message))
