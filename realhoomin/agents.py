@@ -19,37 +19,26 @@ class ScatterMessage():
         self.num_hops = 0
         self.message = message
 
-class GenericHoomin(Agent):
-    grid = None
-    x = None
-    y = None
 
-    startingpos = None
-
-    def __init__(self, unique_id, pos, model):
-        super().__init__(unique_id, model)
-        self.pos = pos
-        self.startingpos = pos
-
-    def hoomin_dance(self):
-        if self.pos is self.startingpos:
-            next_moves = self.model.grid.get_neighborhood(self.pos, False, True)
-            next_move = self.random.choice(next_moves)
-            self.model.grid.move_agent(self, next_move)
-        else:
-            self.model.grid.move_agent(self, self.startingpos)
-
-
-
-class Hoomin(GenericHoomin):
+class Hoomin(Agent):
     ROADHOOMIN = 1
     FLIRTHOOMIN = 2
     BUYHOOMIN = 3
     RESTHOOMIN = 4
     WORKHOOMIN = 5
 
+    grid = None
+    x = None
+    y = None
+
+    startingpos = None
+
+
     def __init__(self, unique_id, pos, model):
-        super().__init__(unique_id, pos, model)
+        super().__init__(unique_id, model)
+        self.pos = pos
+        self.startingpos = pos
+
         self.modes = (Hoomin.ROADHOOMIN,
                       Hoomin.FLIRTHOOMIN,
                       Hoomin.BUYHOOMIN,
@@ -79,6 +68,15 @@ class Hoomin(GenericHoomin):
 
     def hoomininit(self):
         True
+
+    def hoomin_dance(self):
+        if self.pos is self.startingpos:
+            next_moves = self.model.grid.get_neighborhood(self.pos, False, True)
+            next_move = self.random.choice(next_moves)
+            self.model.grid.move_agent(self, next_move)
+        else:
+            self.model.grid.move_agent(self, self.startingpos)
+
 
     #searches for the nearest road tile and returns it
     def find_nearest_road(self):
