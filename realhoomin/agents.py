@@ -278,7 +278,7 @@ class SocialHoomin(Hoomin):
                 self.mode = SocialHoomin.MODE_RANDOM
                 return False
 
-            agent = self.mode.scedule.get(targetfriend[0])
+            agent = self.model.schedule.get(targetfriend[0])
 
             self.dst = agent.pos
             self.random_pathfind()
