@@ -266,7 +266,12 @@ class SocialHoomin(Hoomin):
                     print("starting onroad hoomin ", self.unique_id)
                     self.onroad = True
         elif self.mode == SocialHoomin.MODE_SOCIALIZE:
-            targetfriend = self.random.sample(1, self.friendlist)
+            if self.friendlist is None:
+                print("hoomin ", self.unique_id , " has no friends :(")
+                self.mode = SocialHoomin.MODE_RANDOM
+                return False
+
+            targetfriend = self.random.sample(self.friendlist, 1)
 
             if len(targetfriend) != 1:
                 print("hoomin ", self.unique_id , " has no friends :(")
