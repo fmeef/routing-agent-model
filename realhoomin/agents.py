@@ -202,9 +202,7 @@ class Hoomin(Agent):
 
 
     def step(self):
-        if self.mode is Hoomin.ROADHOOMIN:
-            self.random_road()
-
+        return True
 
 
     def set_mode(self, mode):
