@@ -30,6 +30,12 @@ class RandomHoominActivation(RandomActivation):
         else:
             super().step()
 
+    def get(self, uniqueid):
+        if uniqueid in self._agents:
+            return self._agents[uniqueid]
+        else:
+            return None
+
     def step_hoomintype(self, hoomintype):
         agent_keys = list(self.hoomintypes[hoomintype].keys())
         self.model.random.shuffle(agent_keys)

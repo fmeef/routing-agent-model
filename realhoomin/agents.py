@@ -227,6 +227,46 @@ class Home(Agent):
         self.occupants = self.occupants.union(set([hoomin]))
         hoomin.home = self
 
+class SocialHoomin(Hoomin):
+    '''
+    hoomin that stores a list of friends and seeks them out
+    on a predefined schedule
+    '''
+
+    MODE_SOCIALIZE = 1
+    MODE_RANDOM = 0
+
+    def __init__(self, unique_id, pos, model, friendlist):
+        super().__init__(unique_id, pos, model)
+
+        self.mode = SocialHoomin.MODE_RANDOM
+        self.friendlist = friendlist #list of unique_id to socialize with
+        self.onroad = False
+
+    def step(self):
+        if self.mode == SocialHoomin.MODE_RANDOM:
+            if self.onroad:
+                self.dst = np.array(self.home.pos)
+                self.random_pathfind()
+            else:
+                if self.random_road() is True:
+                    print("starting onroad hoomin ", self.unique_id)
+                    self.onroad = True
+        elif self.mode == SocialHoomin.MODE_SOCIALIZE:
+            targetfriend = self.random.sample(1, self.friendlist)
+
+            if len(targetfriend) != 1:
+                print("hoomin ", self.unique_id , " has no friends :(")
+                self.mode = SocialHoomin.MODE_RANDOM
+                return False
+
+            agent = self.mode.scedule.get(targetfriend[0])
+
+            self.dst = agent.pos
+            self.random_pathfind()
+
+
+
 
 
 class MeetHoomin(Hoomin):
