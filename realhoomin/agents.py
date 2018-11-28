@@ -245,6 +245,17 @@ class SocialHoomin(Hoomin):
         self.socialswitchprob = settings.socialswitchprobability
         self.randomswtichprob = settings.randomswitchprobability
 
+
+    def addfriend(self, hoominid):
+        if self.friendlist is None:
+            self.friendlist = []
+            self.friendlist.append(hoominid)
+        else:
+            self.friendlist.append(hoominid)
+
+    def setfriendlist(self, friendlist):
+        self.friendlist = friendlist
+
     def step(self):
         if self.mode == SocialHoomin.MODE_RANDOM:
             if self.onroad:
