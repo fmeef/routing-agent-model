@@ -242,6 +242,8 @@ class SocialHoomin(Hoomin):
         self.mode = SocialHoomin.MODE_RANDOM
         self.friendlist = friendlist #list of unique_id to socialize with
         self.onroad = False
+        self.socialswitchprob = settings.socialswitchprobability
+        self.randomswtichprob = settings.randomswitchprobability
 
     def step(self):
         if self.mode == SocialHoomin.MODE_RANDOM:
@@ -265,8 +267,14 @@ class SocialHoomin(Hoomin):
             self.dst = agent.pos
             self.random_pathfind()
 
+        switchval = self.random.rand()
 
-
+        if self.mode == SocialHoomin.MODE_SOCIALIZE:
+            if switchval < self.randomswtichprob:
+                self.mode = SocialHoomin.MODE_SOCIALIZE
+        elif self.mode == SocialHoomin.MODE_RANDOM:
+            if switchval < self.socialswitchprob:
+                self.mode = SocialHoomin.MODE_RANDOM
 
 
 class MeetHoomin(Hoomin):

@@ -46,3 +46,11 @@ def hoomin_init(self):
 
 hoomininit = hoomin_init
 scatterfucntion = send_blockdata
+
+
+
+
+
+#social hoomin tuning options
+socialswitchprobability = 0.01
+randomswitchprobability = 0.05
