@@ -194,6 +194,8 @@ class HoominWorld(Model):
             self.grid.place_agent(hoomin, (x,y))
             self.schedule.add(hoomin)
 
+
+        #initialize hoomin friends
         friendlist = set(self.schedule._agents)
         for i in self.schedule._agents:
             fren = self.random.sample(friendlist.difference(set([i])), 1)
