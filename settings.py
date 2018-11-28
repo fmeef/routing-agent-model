@@ -46,6 +46,8 @@ def send_blockdata(self, hoomin):
     for x in hoomin.friendlist:
         self.friendgraph[hoomin.unique_id].append(x)
 
+    #TODO: visualize adjanency list in webui
+
 
 def hoomin_init(self):
     self.friendgraph = {}
