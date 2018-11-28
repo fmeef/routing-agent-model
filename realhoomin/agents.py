@@ -278,7 +278,7 @@ class SocialHoomin(Hoomin):
             self.dst = agent.pos
             self.random_pathfind()
 
-        switchval = self.random.rand()
+        switchval = self.random.random()
 
         if self.mode == SocialHoomin.MODE_SOCIALIZE:
             if switchval < self.randomswtichprob:

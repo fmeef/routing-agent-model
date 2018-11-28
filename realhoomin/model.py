@@ -13,7 +13,7 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
 from realhoomin.schedule import RandomHoominActivation
-from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home
+from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home, SocialHoomin
 import numpy as np
 import settings
 
@@ -180,7 +180,7 @@ class HoominWorld(Model):
         for i in range(self.initial_hoomins):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            hoomin = FindRoadHoomin(self.next_id(), (x,y), self)
+            hoomin = SocialHoomin(self.next_id(), (x,y), self)
             if i == 1:
                 for x in range(10):
                     hoomin.store_scattermessage("hoomin!")
