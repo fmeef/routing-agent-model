@@ -54,3 +54,4 @@ scatterfucntion = send_blockdata
 #social hoomin tuning options
 socialswitchprobability = 0.01
 randomswitchprobability = 0.05
+friendsperhoomin = 3

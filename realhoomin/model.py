@@ -194,6 +194,12 @@ class HoominWorld(Model):
             self.grid.place_agent(hoomin, (x,y))
             self.schedule.add(hoomin)
 
+        friendlist = set(self.schedule._agents)
+        for i in self.schedule._agents:
+            fren = self.random.sample(friendlist.difference(set([i])), 1)
+            for x in fren:
+                self.schedule._agents[i].addfriend(x)
+
         self.roadplace_grid()
         self.running = True
         self.datacollector.collect(self)
