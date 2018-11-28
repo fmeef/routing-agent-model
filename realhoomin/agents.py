@@ -64,6 +64,8 @@ class Hoomin(GenericHoomin):
         self.scatterbuffer = []
         self.scatterrange = settings.bluetooth_range
         Hoomin.send_blockdata = settings.send_blockdata
+        Hoomin.hoomininit = settings.hoomininit
+        self.hoomininit()
     #checks the new destination for bounds and sets it as this hooman's destination
     def setdst(self, newdst):
         if newdst[0] < 0 or newdst[0] > self.model.width:
@@ -75,7 +77,8 @@ class Hoomin(GenericHoomin):
         return True
 
 
-
+    def hoomininit(self):
+        True
 
     #searches for the nearest road tile and returns it
     def find_nearest_road(self):

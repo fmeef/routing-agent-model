@@ -29,7 +29,7 @@ bluetooth_range = 5
 Function called when exchanging scatterdata between two hoomins.
 
 Self is hoomin initiating the exchange, hoomin is hoomin that self is
-exchanging with 
+exchanging with
 '''
 def send_blockdata(self, hoomin):
     packets = self.random.sample(self.scatterbuffer, min(5,len(self.scatterbuffer)))
@@ -41,4 +41,8 @@ def send_blockdata(self, hoomin):
     self.model.total_scattermessages += counter
 
 
+def hoomin_init(self):
+    True
+
+hoomininit = hoomin_init
 scatterfucntion = send_blockdata
