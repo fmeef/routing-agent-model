@@ -282,10 +282,10 @@ class SocialHoomin(Hoomin):
 
         if self.mode == SocialHoomin.MODE_SOCIALIZE:
             if switchval < self.randomswtichprob:
-                self.mode = SocialHoomin.MODE_SOCIALIZE
+                self.mode = SocialHoomin.MODE_RANDOM
         elif self.mode == SocialHoomin.MODE_RANDOM:
             if switchval < self.socialswitchprob:
-                self.mode = SocialHoomin.MODE_RANDOM
+                self.mode = SocialHoomin.MODE_SOCIALIZE
 
 
 class MeetHoomin(Hoomin):
