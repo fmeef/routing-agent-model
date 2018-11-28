@@ -40,9 +40,15 @@ def send_blockdata(self, hoomin):
             counter += 1
     self.model.total_scattermessages += counter
 
+    if hoomin.unique_id not in self.friendgraph:
+        self.friendgraph[hoomin.unique_id] = []
+
+    for x in hoomin.friendlist:
+        self.friendgraph[hoomin.unique_id].append(x)
+
 
 def hoomin_init(self):
-    True
+    self.friendgraph = {}
 
 hoomininit = hoomin_init
 scatterfucntion = send_blockdata
