@@ -201,11 +201,6 @@ class Hoomin(Agent):
 
 
 
-    def sync_scatterbuffer(self):
-        True
-        #TODO:
-
-
     def step(self):
         if self.mode is Hoomin.ROADHOOMIN:
             self.random_road()
