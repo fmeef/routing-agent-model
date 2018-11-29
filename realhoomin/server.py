@@ -25,7 +25,7 @@ def friendgraph_portrayal(G):
     portrayal = dict()
     portrayal['nodes'] = [{'size': 6,
                            'color': node_color(agents[0]),
-                           'tooltip': "id: {}<br>state: {}".format(agents[0].unique_id, agents[0].state.name),
+                           'tooltip': "it's a hoomin",
                            }
                           for (_, agents) in G.nodes.data('agent')]
 

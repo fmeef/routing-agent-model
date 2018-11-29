@@ -197,7 +197,7 @@ class HoominWorld(Model):
                 myhome[0].claim(hoomin)
             self.grid.place_agent(hoomin, (x,y))
             self.schedule.add(hoomin)
-            self.G.add_node(hoomin)
+            self.G.add_node(hoomin, agent=[hoomin])
 
 
         #initialize hoomin friends
