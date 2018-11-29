@@ -205,7 +205,7 @@ class HoominWorld(Model):
         #initialize hoomin friends
         friendlist = set(self.schedule._agents)
         for i in self.schedule._agents:
-            fren = self.random.sample(friendlist.difference(set([i])), 1)
+            fren = self.random.sample(friendlist.difference(set([i])), settings.friendsperhoomin)
             for x in fren:
                 self.schedule._agents[i].addfriend(x)
                 self.G.add_edge(self.schedule._agents[i], self.schedule._agents[x])
