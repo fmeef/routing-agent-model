@@ -208,6 +208,7 @@ class HoominWorld(Model):
             fren = self.random.sample(friendlist.difference(set([i])), 1)
             for x in fren:
                 self.schedule._agents[i].addfriend(x)
+                self.G.add_edge(self.schedule._agents[i], self.schedule._agents[x])
 
         self.roadplace_grid()
         self.running = True
