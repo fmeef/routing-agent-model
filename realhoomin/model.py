@@ -224,7 +224,7 @@ class HoominWorld(Model):
         if self.hoomin_level % 4 == 0 and settings.displayfriendgraph:
             plt.cla()
             plt.clf()
-            nx.draw(self.G)
+            nx.draw(self.schedule._agents[self.hoomin_zero_id].friendgraph)
             plt.draw()
             plt.pause(0.001)
         if self.verbose:
