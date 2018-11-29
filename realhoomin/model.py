@@ -14,6 +14,7 @@ from mesa.datacollection import DataCollector
 from realhoomin.schedule import RandomHoominActivation
 from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home, SocialHoomin
 import numpy as np
+import matplotlib.pyplot as plt
 import networkx as nx
 import settings
 
@@ -119,7 +120,8 @@ class HoominWorld(Model):
 
         #graph visualization
         self.G = nx.Graph()
-
+        plt.ion()
+        plt.show()
 
         #ignore this. it does nothing
         self.hoomin_level = 0
@@ -218,6 +220,12 @@ class HoominWorld(Model):
         self.schedule.step()
         self.datacollector.collect(self)
         self.hoomin_level += 1
+        if self.hoomin_level % 4 == 0:
+            plt.cla()
+            plt.clf()
+            nx.draw(self.G)
+            plt.draw()
+            plt.pause(0.001)
         if self.verbose:
             print([self.schedule.time,
                    "nothing yet"])
@@ -226,6 +234,5 @@ class HoominWorld(Model):
         if self.verbose:
             print("Initializing hoomins" ,
                   self.schedule.get_hoomin_count(Hoomin))
-
             for i in range(step_count):
                 self.step()
