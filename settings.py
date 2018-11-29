@@ -56,6 +56,8 @@ hoomininit = hoomin_init
 scatterfucntion = send_blockdata
 
 
+#visualization / performance options
+displayfriendgraph = True
 
 
 
