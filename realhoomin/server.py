@@ -80,8 +80,8 @@ def hoomin_portrayal(agent):
 canvas_element = CanvasGrid(hoomin_portrayal, settings.width, settings.height, 500, 500)
 chart_element = ChartModule([{"Label" : "Messages Exchanged", "Color" : "#CACACA"}])
 
-friendgraph = NetworkModule(friendgraph_portrayal, 300, 300, library='d3')
+friendgraph = NetworkModule(friendgraph_portrayal, 50, 50, library='d3')
 
 model_params = {}
-server = ModularServer(HoominWorld, [canvas_element, chart_element, friendgraph], "Hoomin World", model_params)
+server = ModularServer(HoominWorld, [canvas_element, chart_element], "Hoomin World", model_params)
 server.port = 8083
