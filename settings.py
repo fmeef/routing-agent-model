@@ -61,7 +61,7 @@ scatterfucntion = send_blockdata
 
 #visualization / performance options
 displayfriendgraph = True
-
+graphrefreshfreq = 10
 
 
 #social hoomin tuning options

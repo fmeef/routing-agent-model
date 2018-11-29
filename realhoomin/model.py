@@ -221,7 +221,7 @@ class HoominWorld(Model):
         self.schedule.step()
         self.datacollector.collect(self)
         self.hoomin_level += 1
-        if self.hoomin_level % 4 == 0 and settings.displayfriendgraph:
+        if self.hoomin_level % settings.graphrefreshfreq == 0 and settings.displayfriendgraph:
             plt.cla()
             plt.clf()
             nx.draw(self.schedule._agents[self.hoomin_zero_id].friendgraph)
