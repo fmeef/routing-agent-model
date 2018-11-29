@@ -11,10 +11,10 @@ networks.
 from mesa import Model
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
-
 from realhoomin.schedule import RandomHoominActivation
 from realhoomin.agents  import Hoomin, Road, MeetHoomin, FindRoadHoomin, Home, SocialHoomin
 import numpy as np
+import networkx as nx
 import settings
 
 
@@ -116,6 +116,9 @@ class HoominWorld(Model):
         self.width = width
 
 
+
+        #graph visualization
+        self.G = nx.Graph()
 
         #ignore this. it does nothing
         self.hoomin_level = 0
