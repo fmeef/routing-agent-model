@@ -120,6 +120,7 @@ class HoominWorld(Model):
         #graph visualization
         self.G = nx.Graph()
 
+
         #ignore this. it does nothing
         self.hoomin_level = 0
 
@@ -196,6 +197,7 @@ class HoominWorld(Model):
                 myhome[0].claim(hoomin)
             self.grid.place_agent(hoomin, (x,y))
             self.schedule.add(hoomin)
+            self.G.add_node(hoomin)
 
 
         #initialize hoomin friends

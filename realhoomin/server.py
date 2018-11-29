@@ -35,6 +35,8 @@ def friendgraph_portrayal(G):
                            'width': edge_width(*get_agents(source, target)),
                            }
                           for (source, target) in G.edges]
+    portrayal['x'] = 0
+    portrayal['y'] = 400
 
     return portrayal
 
@@ -78,7 +80,7 @@ def hoomin_portrayal(agent):
 canvas_element = CanvasGrid(hoomin_portrayal, settings.width, settings.height, 500, 500)
 chart_element = ChartModule([{"Label" : "Messages Exchanged", "Color" : "#CACACA"}])
 
-friendgraph = NetworkModule(friendgraph_portrayal, 300, 300, library='d3')
+friendgraph = NetworkModule(friendgraph_portrayal, 300, 300, library='sigma')
 
 model_params = {}
 server = ModularServer(HoominWorld, [canvas_element, chart_element, friendgraph], "Hoomin World", model_params)
