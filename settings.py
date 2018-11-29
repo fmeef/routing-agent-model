@@ -1,3 +1,6 @@
+import networkx as nx
+
+
 ## tunable settings for model
 
 exampleval = "blob"
@@ -40,17 +43,17 @@ def send_blockdata(self, hoomin):
             counter += 1
     self.model.total_scattermessages += counter
 
-    if hoomin.unique_id not in self.friendgraph:
-        self.friendgraph[hoomin.unique_id] = []
-
+    self.friendgraph.add_node(hoomin)
     for x in hoomin.friendlist:
-        self.friendgraph[hoomin.unique_id].append(x)
+        h = self.model.schedule._agents[x]
+        self.friendgraph.add_node(h)
+        self.friendgraph.add_edge(hoomin, h)
 
     #TODO: visualize adjanency list in webui
 
 
 def hoomin_init(self):
-    self.friendgraph = {}
+    self.friendgraph = nx.Graph()
 
 hoomininit = hoomin_init
 scatterfucntion = send_blockdata
