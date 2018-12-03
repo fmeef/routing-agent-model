@@ -100,15 +100,17 @@ class HoominWorld(Model):
             road = self.random.sample(self.roadset, 1)
             if len(road) > 0 and road[0] is not None:
                 neighbors = self.grid.get_neighborhood(road[0].pos, False, True)
-            for neighbor in neighbors:
-                n = []
-                if len(self.grid.get_cell_list_contents(neighbor)) is 0:
-                    n.append(neighbor)
-                if len(n) > 0:
-                    homeblock = self.random.sample(n, 1)
-                    home = Home(self.next_id(), homeblock[0], self)
-                    homelist.append(home)
-                    self.grid.place_agent(home, homeblock[0])
+                for neighbor in neighbors:
+                    n = []
+                    if len(self.grid.get_cell_list_contents(neighbor)) is 0:
+                        n.append(neighbor)
+                    if len(n) > 0:
+                        homeblock = self.random.sample(n, 1)
+                        home = Home(self.next_id(), homeblock[0], self)
+                        homelist.append(home)
+                        self.grid.place_agent(home, homeblock[0])
+            else:
+                print("systemic oppression under capitalism forclosed on one hoomin's home.")
 
         self.homeset = self.homeset.union(set(homelist))
 
