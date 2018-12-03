@@ -58,6 +58,6 @@ class Logging:
         if self.files[filename].closed:
             return False
 
-        self.files[filename].write(data + '\n')
+        self.files[filename].write(str(data) + '\n')
         self.files[filename].flush()
         return True

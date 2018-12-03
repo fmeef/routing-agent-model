@@ -230,13 +230,13 @@ class HoominWorld(Model):
 
     def logstep(self):
         if not self.logger.isopen(HoominWorld.FRIENDNODELOGNAME):
-            self.logger.open(HoominWorld.FRIENDNODELOGNAME)
+            self.logger.open(HoominWorld.FRIENDNODELOGNAME, overwrite=True)
         if not self.logger.isopen(HoominWorld.TOTALMESSAGELOGNAME):
-            self.logger.open(HoominWorld.TOTALMESSAGELOGNAME)
+            self.logger.open(HoominWorld.TOTALMESSAGELOGNAME, overwrite=True)
 
         self.logger.write(HoominWorld.TOTALMESSAGELOGNAME,str(self.hoomin_level)  + " " + str(self.global_scattermessages))
 
-        st ="STEP: " + self.hoomin_level + "hoominzero: " + str(self.schedule._agents[self.hoomin_zero_id].friendgraph.number_of_nodes()) + " finalhoomin: " + str(self.schedule._agents[self.final_hoomin_id].friendgraph.number_of_nodes())
+        st ="STEP: " + str(self.hoomin_level) + " hoominzero: " + str(self.schedule._agents[self.hoomin_zero_id].friendgraph.number_of_nodes()) + " finalhoomin: " + str(self.schedule._agents[self.final_hoomin_id].friendgraph.number_of_nodes())
         self.logger.write(HoominWorld.FRIENDNODELOGNAME, st)
 
 
@@ -258,11 +258,11 @@ class HoominWorld(Model):
             print("model completed")
             self.running = False
             if not self.logger.isopen(HoominWorld.STEPSTOCOMPLETIONLOGNAME):
-                self.logger.open(HoominWorld.STEPSTOCOMPLETIONLOGNAME)
+                self.logger.open(HoominWorld.STEPSTOCOMPLETIONLOGNAME, overwrite=True)
             self.logger.write(HoominWorld.STEPSTOCOMPLETIONLOGNAME, self.hoomin_level)
             self.logger.close(HoominWorld.STEPSTOCOMPLETIONLOGNAME)
 
-
+        self.logstep()
 
     def run_model(self, step_count=200):
         if self.verbose:
