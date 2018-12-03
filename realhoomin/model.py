@@ -236,7 +236,7 @@ class HoominWorld(Model):
 
         self.logger.write(HoominWorld.TOTALMESSAGELOGNAME,str(self.hoomin_level)  + " " + str(self.global_scattermessages))
 
-        st ="hoominzero: " + str(self.schedule._agents[self.hoomin_zero_id].friendgraph.number_of_nodes()) + " finalhoomin: " + str(self.schedule._agents[self.final_hoomin_id].friendgraph.number_of_nodes())
+        st ="STEP: " + self.hoomin_level + "hoominzero: " + str(self.schedule._agents[self.hoomin_zero_id].friendgraph.number_of_nodes()) + " finalhoomin: " + str(self.schedule._agents[self.final_hoomin_id].friendgraph.number_of_nodes())
         self.logger.write(HoominWorld.FRIENDNODELOGNAME, st)
 
 
