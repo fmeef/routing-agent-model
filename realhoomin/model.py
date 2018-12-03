@@ -192,6 +192,10 @@ class HoominWorld(Model):
                     hoomin.store_scattermessage("hoomin!")
 
                 self.hoomin_zero_id = hoomin.unique_id
+
+            if i == self.initial_hoomins - 1:
+                self.final_hoomin_id = hoomin.unique_id
+
             possiblehomes = self.homeset.difference(Home.claimedhomes)
             if len(possiblehomes) > 0:
                 myhome = self.random.sample(possiblehomes, 1)
