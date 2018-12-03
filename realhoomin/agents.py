@@ -253,6 +253,9 @@ class SocialHoomin(Hoomin):
         else:
             self.friendlist.append(hoominid)
 
+        self.friendgraph.add_node(self.model.schedule._agents[hoominid])
+        self.friendgraph.add_edge(self.model.schedule._agents[hoominid], self.model.schedule._agents[self.unique_id])
+
     def setfriendlist(self, friendlist):
         self.friendlist = friendlist
 
