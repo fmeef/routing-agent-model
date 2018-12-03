@@ -48,8 +48,9 @@ def send_blockdata(self, hoomin):
         h = self.model.schedule._agents[x]
         self.friendgraph.add_node(h)
         self.friendgraph.add_edge(hoomin, h)
-        if self.unique_id == self.model.hoomin_zero_id:
-            self.model.hoominzero_nodecount += 1
+
+    if self.unique_id == self.model.hoomin_zero_id:
+            self.model.hoominzero_nodecount = self.friendgraph.number_of_nodes()
 
     if nx.is_isomorphic(self.friendgraph, self.model.G):
         self.complete = True
