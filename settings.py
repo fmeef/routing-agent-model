@@ -45,6 +45,7 @@ def send_blockdata(self, hoomin):
     if hoomin.unique_id == self.model.final_hoomin_id:
         self.model.total_scattermessages += counter
 
+    self.model.global_scattermessages += counter
     self.friendgraph.add_node(hoomin)
     for x in hoomin.friendlist:
         h = self.model.schedule._agents[x]

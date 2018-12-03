@@ -27,6 +27,10 @@ class HoominWorld(Model):
     STRAIGHT = 2
 
 
+    FRIENDNODELOGNAME = "friendnodes"
+    TOTALMESSAGELOGNAME = "totalmessages"
+    STEPSTOCOMPLETIONLOGNAME = "stepstocompletion"
+
     verbose = False
     description = "A model of foot traffic and radio communication in an urban environment"
 
@@ -70,6 +74,7 @@ class HoominWorld(Model):
 
         #scatterbrain metrics
         self.total_scattermessages = 0
+        self.global_scattermessages = 0
         self.hoominzero_nodecount = 0
 
         #hoomin tuning values
@@ -224,7 +229,16 @@ class HoominWorld(Model):
         return self.hoomin_level
 
     def logstep(self):
-        pass
+        if not self.logger.isopen(HoominWorld.FRIENDNODELOGNAME):
+            self.logger.open(HoominWorld.FRIENDNODELOGNAME)
+        if not self.logger.isopen(HoominWorld.TOTALMESSAGELOGNAME):
+            self.logger.open(HoominWorld.TOTALMESSAGELOGNAME)
+
+        self.logger.write(HoominWorld.TOTALMESSAGELOGNAME,str(self.hoomin_level)  + " " + str(self.global_scattermessages))
+
+        st ="hoominzero: " + str(self.schedule._agents[self.hoomin_zero_id].friendgraph.number_of_nodes()) + " finalhoomin: " + str(self.schedule._agents[self.final_hoomin_id].friendgraph.number_of_nodes())
+        self.logger.write(HoominWorld.FRIENDNODELOGNAME, st)
+
 
     def step(self):
         self.schedule.step()
@@ -243,6 +257,11 @@ class HoominWorld(Model):
         if len(self.schedule._agents[self.final_hoomin_id].scatterbuffer) >= settings.initial_scattermessages:
             print("model completed")
             self.running = False
+            if not self.logger.isopen(HoominWorld.STEPSTOCOMPLETIONLOGNAME):
+                self.logger.open(HoominWorld.STEPSTOCOMPLETIONLOGNAME)
+            self.logger.write(HoominWorld.STEPSTOCOMPLETIONLOGNAME, self.hoomin_level)
+            self.logger.close(HoominWorld.STEPSTOCOMPLETIONLOGNAME)
+
 
 
     def run_model(self, step_count=200):
