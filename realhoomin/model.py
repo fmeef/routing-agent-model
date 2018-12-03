@@ -226,7 +226,7 @@ class HoominWorld(Model):
             plt.clf()
             nx.draw(self.schedule._agents[self.hoomin_zero_id].friendgraph)
             plt.draw()
-            plt.pause(0.001)
+            plt.pause(0.005)
         if self.verbose:
             print([self.schedule.time,
                    "nothing yet"])
