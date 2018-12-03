@@ -11,6 +11,7 @@ width = 50
 
 #hoomin generation tuning options
 initial_hoomins = 10
+initial_scattermessages = 10
 
 # road generation tuning
 straightweight = 0.9

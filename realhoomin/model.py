@@ -112,7 +112,7 @@ class HoominWorld(Model):
             y = self.random.randrange(self.height)
             hoomin = SocialHoomin(self.next_id(), (x,y), self)
             if i == 1:
-                for x in range(10):
+                for x in range(settings.initial_scattermessages):
                     hoomin.store_scattermessage("hoomin!")
 
                 self.hoomin_zero_id = hoomin.unique_id
