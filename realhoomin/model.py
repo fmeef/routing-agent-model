@@ -223,6 +223,9 @@ class HoominWorld(Model):
     def get_hoomin_level(self):
         return self.hoomin_level
 
+    def logstep(self):
+        pass
+
     def step(self):
         self.schedule.step()
         self.datacollector.collect(self)

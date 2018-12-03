@@ -29,6 +29,18 @@ class Logging:
         else:
             return False
 
+    def isopen(self, filename):
+        if self.inited:
+            if filename in self.files:
+                if self.files[filename].closed:
+                    return False
+                else:
+                    return True
+            else:
+                return False
+        else:
+            return False
+
     def close(self, filename):
         if filename not in self.files:
             return False
