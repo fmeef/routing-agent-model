@@ -45,11 +45,12 @@ class HoominWorld(Model):
 
         #logging framework
         self.logger = Logging("logs", "normal")
+        self.G = nx.Graph()
 
         #graph visualization
-        self.G = nx.Graph()
-        plt.ion()
-        plt.show()
+        if not settings.runheadless:
+            plt.ion()
+            plt.show()
 
         #ignore this. it does nothing
         self.hoomin_level = 0
@@ -244,7 +245,7 @@ class HoominWorld(Model):
         self.schedule.step()
         self.datacollector.collect(self)
         self.hoomin_level += 1
-        if self.hoomin_level % settings.graphrefreshfreq == 0 and settings.displayfriendgraph:
+        if self.hoomin_level % settings.graphrefreshfreq == 0 and settings.displayfriendgraph and not settings.runheadless:
             plt.cla()
             plt.clf()
             nx.draw(self.schedule._agents[self.hoomin_zero_id].friendgraph)

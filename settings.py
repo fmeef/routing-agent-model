@@ -4,6 +4,7 @@ import networkx as nx
 ## tunable settings for model
 
 exampleval = "blob"
+runheadless = True
 
 #grid options
 height = 50
