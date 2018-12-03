@@ -238,6 +238,11 @@ class HoominWorld(Model):
             print([self.schedule.time,
                    "nothing yet"])
 
+        if len(self.schedule._agents[self.final_hoomin_id].scatterbuffer) >= settings.initial_scattermessages:
+            print("model completed")
+            self.running = False
+
+
     def run_model(self, step_count=200):
         if self.verbose:
             print("Initializing hoomins" ,
