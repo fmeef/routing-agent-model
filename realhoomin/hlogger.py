@@ -23,7 +23,6 @@ class Logging:
                 return False
             elif filename in self.files:
                 self.files[filename].close()
-
             self.files[filename] = open(p, 'w')
             return True
         else:
@@ -60,5 +59,5 @@ class Logging:
             return False
 
         self.files[filename].write(data + '\n')
-
+        self.files[filename].flush()
         return True
