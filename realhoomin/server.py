@@ -81,7 +81,7 @@ def hoomin_portrayal(agent):
     return portrayal
 
 canvas_element = CanvasGrid(hoomin_portrayal, settings.width, settings.height, 500, 500)
-chart_element = ChartModule([{"Label" : "Messages Exchanged", "Color" : "#CACACA"}])
+chart_element = ChartModule([{"Label" : "Messages Exchanged", "Color" : "#CACACA"}, {"Label" : "FriendGraph Node Count", "Color" : "#FF0000"}])
 
 friendgraph = NetworkModule(friendgraph_portrayal, 50, 50, library='d3')
 
