@@ -17,6 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 import settings
+from realhoomin.hlogger import Logging
 
 
 class HoominWorld(Model):
@@ -116,7 +117,8 @@ class HoominWorld(Model):
         self.height = height
         self.width = width
 
-
+        #logging framework
+        self.logger = Logging("logs", "normal")
 
         #graph visualization
         self.G = nx.Graph()
