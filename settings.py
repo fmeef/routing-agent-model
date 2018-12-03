@@ -49,11 +49,15 @@ def send_blockdata(self, hoomin):
         self.friendgraph.add_node(h)
         self.friendgraph.add_edge(hoomin, h)
 
+    if nx.is_isomorphic(self.friendgraph, self.model.G):
+        self.complete = True
+
     #TODO: visualize adjanency list in webui
 
 
 def hoomin_init(self):
     self.friendgraph = nx.Graph()
+    self.complete = False
 
 hoomininit = hoomin_init
 scatterfucntion = send_blockdata

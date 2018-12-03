@@ -11,7 +11,10 @@ def friendgraph_portrayal(G):
     # The model ensures there is always 1 agent per node
 
     def node_color(agent):
-        return '#008000'
+        if agent.complete:
+            return '#0000FF'
+        else:
+            return '#008000'
 
     def edge_color(agent1, agent2):
             return '#000000'
