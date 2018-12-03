@@ -35,7 +35,7 @@ class HoominWorld(Model):
     description = "A model of foot traffic and radio communication in an urban environment"
 
 
-    def __init__(self, height=50, width=50, initial_hoomins=10):
+    def __init__(self, height=50, width=50, initial_hoomins=10, logtag="default"):
         super().__init__()
 
         print("initializing ", width, height)
@@ -44,7 +44,8 @@ class HoominWorld(Model):
         self.width = width
 
         #logging framework
-        self.logger = Logging("logs", "normal")
+        self.logger = Logging("logs", logtag)
+        self.logtag = logtag
         self.G = nx.Graph()
 
         #graph visualization
