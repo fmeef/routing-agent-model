@@ -5,8 +5,8 @@ import sys
 class Logging:
 
     def __init__(self, logdir, runtag):
-        if not os.path.exists(logdir):
-            os.makedirs(logdir)
+        if not os.path.exists(logdir + '/' + runtag):
+            os.makedirs(logdir + '/' + runtag)
 
         self.logdir = logdir
         self.runtag = runtag
@@ -15,7 +15,7 @@ class Logging:
 
     def open(self, filename, overwrite=False):
         if self.inited:
-            p = self.logdir + '/' + filename
+            p = self.logdir + '/' + self.runtag  + '/' + filename
             if os.path.exists(p) and not overwrite:
                 return False
 
