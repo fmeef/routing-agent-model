@@ -51,6 +51,7 @@ def send_blockdata(self, hoomin):
 
     if nx.is_isomorphic(self.friendgraph, self.model.G):
         self.complete = True
+        print("we made it! hoomin ", self.unique_id, " has discovered true friendship!")
 
     #TODO: visualize adjanency list in webui
 
