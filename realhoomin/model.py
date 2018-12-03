@@ -247,5 +247,5 @@ class HoominWorld(Model):
         if self.verbose:
             print("Initializing hoomins" ,
                   self.schedule.get_hoomin_count(Hoomin))
-            while self.running:
-                self.step()
+        while self.running:
+            self.step()
