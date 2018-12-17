@@ -135,7 +135,7 @@ class Hoomin(Agent):
     def random_road(self):
         if self.seekingroad is False:
             road = self.find_nearest_road()
-            print("hoomin ", self.unique_id, " found road ", road.pos)
+            #print("hoomin ", self.unique_id, " found road ", road.pos)
             if road is None:
                 return False
             else:
@@ -266,11 +266,11 @@ class SocialHoomin(Hoomin):
                 self.random_pathfind()
             else:
                 if self.random_road() is True:
-                    print("starting onroad hoomin ", self.unique_id)
+                    #print("starting onroad hoomin ", self.unique_id)
                     self.onroad = True
         elif self.mode == SocialHoomin.MODE_SOCIALIZE:
             if self.friendlist is None:
-                print("hoomin ", self.unique_id , " has no friends :(")
+                #print("hoomin ", self.unique_id , " has no friends :(")
                 self.mode = SocialHoomin.MODE_RANDOM
                 return False
 
@@ -317,7 +317,7 @@ class FindRoadHoomin(Hoomin):
             self.random_pathfind()
         else:
             if self.random_road() is True:
-                print("starting onroad hoomin ", self.unique_id)
+                #print("starting onroad hoomin ", self.unique_id)
                 self.onroad = True
 
 

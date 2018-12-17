@@ -7,20 +7,20 @@ exampleval = "blob"
 runheadless = True
 
 #grid options
-height = 50
-width = 50
+height = 60
+width = 60
 
 #hoomin generation tuning options
 initial_hoomins = 10
 initial_scattermessages = 10
 
 # road generation tuning
-straightweight = 0.9
-leftweight = 0.05
-rightweight = 0.05
-initial_roads = 80
-initial_road_seeds = 4
-gridspacing = 7
+straightweight = 0.98
+leftweight = 0.01
+rightweight = 0.01
+initial_roads = 140
+initial_road_seeds = 10
+gridspacing = 15
 
 #home generation tuning options
 homes_per_hoomins = 1

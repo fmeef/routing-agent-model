@@ -38,10 +38,10 @@ class HoominWorld(Model):
     def __init__(self, height=50, width=50, initial_hoomins=10, logtag="default"):
         super().__init__()
 
-        print("initializing ", width, height)
+        print("initializing ", settings.width, settings.height)
         #map height and width
-        self.height = height
-        self.width = width
+        self.height = settings.height
+        self.width = settings.width
 
         #logging framework
         self.logger = Logging("logs", logtag)
@@ -114,6 +114,7 @@ class HoominWorld(Model):
 
         self.homeset = self.homeset.union(set(homelist))
 
+
         #initialize hoomins
         for i in range(self.initial_hoomins):
             x = self.random.randrange(self.width)
@@ -122,11 +123,16 @@ class HoominWorld(Model):
             if i == 1:
                 for x in range(settings.initial_scattermessages):
                     hoomin.store_scattermessage("hoomin!")
-
+                hoomin.pos = (0,0)
+                x = 0
+                y = 0
                 self.hoomin_zero_id = hoomin.unique_id
 
             if i == self.initial_hoomins - 1:
                 self.final_hoomin_id = hoomin.unique_id
+                hoomin.pos = (self.width - 1, self.height - 1)
+                x = self.width - 1
+                y = self.height - 1
 
             possiblehomes = self.homeset.difference(Home.claimedhomes)
             if len(possiblehomes) > 0:
@@ -177,7 +183,7 @@ class HoominWorld(Model):
         else:
             self.roaddir = np.array((0,0))
             print("bad bad bad")
-        print("placing road, direction ", direction, " coord: ", self.roadcurrentcoord)
+#        print("placing road, direction ", direction, " coord: ", self.roadcurrentcoord)
 
 
         newcoord = self.roadcurrentcoord + self.roaddir
@@ -196,7 +202,7 @@ class HoominWorld(Model):
 
     def singleroad(self, initialcoord=(0,0)):
         #initialize roads
-        print("placing road seed: ", initialcoord)
+        #print("placing road seed: ", initialcoord)
         roaddir = self.random.randrange(4)
         roadseedx = self.random.randrange(self.width)
         roadseedy = self.random.randrange(self.height)
@@ -219,12 +225,13 @@ class HoominWorld(Model):
                 elif val > self.leftweight + self.straightweight:
                     road = self.roadplace_random(HoominWorld.RIGHT)
                 if road is None:
-                    print("err: road is none")
+                    #print("err: road is none")
+                    True
 
                 roadlist.append(road);
             road = None
             counter += 1
-        print("initialized ", counter, " road tiles")
+        #print("initialized ", counter, " road tiles")
         self.roadset = self.roadset.union(set(roadlist))
         del roadlist
 
